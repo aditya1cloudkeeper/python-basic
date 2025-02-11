@@ -1,0 +1,46 @@
+# #1ST QUESTION 1ST  PART
+
+# import re
+# def validateip(ip):
+#     regex = "^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])$"
+    
+#     if not re.match(regex,ip):
+#         return "Not a valid IP address"
+
+    # dot = list(map(int, ip.split('.')))
+    
+#     if dot[0] == 10:
+#         return False, "It is a private IP"
+#     elif dot[0] == 172 and 16 <= dot[1] <=31:
+#         return False, "It is a private IP"
+#     elif dot[0] == 192 and dot[1] == 168:
+#         return False, "It is a private IP"
+    
+#     return "Valid IP Address"
+    
+# ip = "192.168.255.255"
+# print(validateip(ip))
+
+# #1ST QUESTION 2ND  PART
+
+# def validatemail(email):
+ 
+#     if not email.endswith('@gmail.com'):
+#         return "It should contain @gmail.com at the end"
+    
+#     parts = email.split('@')
+#     if len(parts) != 2:
+#         return "@ can be only once"
+    
+#     local_part = parts[0]
+#     if len(local_part) == 0:
+#         return "Enter the username"
+    
+   
+#     if not re.fullmatch(r'^[a-z0-9._-]+$', local_part):
+#         return False, "Username should contain only lowercase letters , numbers and permitted symbols."
+    
+#     return True, "Valid Gmail address."
+
+# email = "a@gmailcom"
+# print(validatemail(email))
