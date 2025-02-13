@@ -1,0 +1,54 @@
+
+# import csv
+# import sys
+
+# def read_csv(file_path):
+#     """Reads a CSV file and returns its content as a list of lists."""
+#     try:
+#         with open(file_path, mode='r', newline='', encoding='utf-8') as csvfile:
+#             csv_reader = csv.reader(csvfile)
+#             return [row for row in csv_reader]
+#     except Exception as e:
+#         print(f"Error reading file '{file_path}': {e}")
+#         sys.exit(1)
+
+# def get_column_widths(rows):
+#     """Calculates the maximum width for each column."""
+#     return [max(len(str(row[i])) for row in rows) for i in range(len(rows[0]))]
+
+# def create_border(widths):
+#     """Creates a horizontal border line based on column widths."""
+#     return '+' + '+'.join('-' * (w + 2) for w in widths) + '+'
+
+# def print_table(rows):
+#     """Prints the CSV data as a formatted table."""
+#     if not rows:
+#         print("No data found in the CSV file!")
+#         return
+    
+#     column_widths = get_column_widths(rows)
+#     border = create_border(column_widths)
+    
+#     print("\nHere is your table:")
+#     print(border)
+    
+#     for index, row in enumerate(rows):
+#         row_cells = [" " + str(cell).ljust(column_widths[i]) + " " for i, cell in enumerate(row)]
+#         print("|" + "|".join(row_cells) + "|")
+        
+#         if index == 0:  # Print border after header
+#             print(border)
+    
+#     print(border)  # Final border
+
+# def main():
+#     if len(sys.argv) < 2:
+#         print("Usage: python script.py <csv_file>")
+#         sys.exit(1)
+    
+#     file_path = sys.argv[1]
+#     rows = read_csv(file_path)
+#     print_table(rows)
+
+# if __name__ == "__main__":
+#     main()
