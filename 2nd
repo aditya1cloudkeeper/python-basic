@@ -1,0 +1,27 @@
+# 2nd Question 
+
+        # import random
+        # import string
+
+
+        # def password():
+
+        #     uppercase = string.ascii_uppercase
+        #     lowercase = string.ascii_lowercase
+        #     numbers = string.digits
+        #     specials = "!@#$%&*"
+
+
+        #     required_characters = [
+        #         random.choice(uppercase),random.choice(lowercase),random.choice(numbers),random.choice(specials),
+        #         random.choice(uppercase),random.choice(lowercase),random.choice(numbers),random.choice(specials),
+        #         random.choice(uppercase),random.choice(lowercase),random.choice(numbers),random.choice(specials),
+        #         random.choice(uppercase),random.choice(lowercase),random.choice(numbers),random.choice(specials),
+        #     ]
+
+        #     random.shuffle(required_characters )
+
+        #     return ''.join(required_characters )
+
+
+        # print( password())
