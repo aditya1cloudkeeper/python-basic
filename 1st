@@ -24,7 +24,7 @@
 # #1ST QUESTION 2ND  PART
         
         # def validatemail(email):
-         
+              email = email.strip()   
         #     if not email.endswith('@gmail.com'):
         #         return "It should contain @gmail.com at the end"
             
