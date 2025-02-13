@@ -1,0 +1,84 @@
+
+    # import sys
+
+    # # Define the hierarchy of instance sizes
+    # INSTANCE_SIZES = [
+    #     "nano", "micro", "small", "medium", "large",
+    #     "xlarge", "2xlarge", "4xlarge", "8xlarge",
+    #     "12xlarge", "16xlarge", "24xlarge", "32xlarge"
+    # ]
+
+    # # Define the latest generation of instance families
+    # LATEST_GENERATION = {
+    #     "t2": "t3",
+    #     "m4": "m5",
+    #     "c4": "c5",
+    #     "r4": "r5",
+    #     # Add more mappings as needed
+    # }
+
+    # def parse_instance_type(instance_type):
+    #     """
+    #     Parses the instance type into its family and size components.
+    #     """
+    #     family, size = instance_type.rsplit('.', 1)
+    #     return family, size
+
+    # def get_recommendation(current_instance, cpu_utilization):
+    #     """
+    #     Provides a recommendation based on the current instance type and CPU utilization.
+    #     """
+    #     family, size = parse_instance_type(current_instance)
+    #     size_index = INSTANCE_SIZES.index(size)
+
+    #     if cpu_utilization < 20:
+    #         status = "Underutilized"
+    #         if size_index > 0:
+    #             recommended_size = INSTANCE_SIZES[size_index - 1]
+    #             recommended_instance = f"{family}.{recommended_size}"
+    #         else:
+    #             recommended_instance = "No smaller size available"
+    #     elif 20 <= cpu_utilization <= 80:
+    #         status = "Optimized"
+    #         recommended_family = LATEST_GENERATION.get(family, family)
+    #         recommended_instance = f"{recommended_family}.{size}"
+    #     else:
+    #         status = "Overutilized"
+    #         if size_index < len(INSTANCE_SIZES) - 1:
+    #             recommended_size = INSTANCE_SIZES[size_index + 1]
+    #             recommended_instance = f"{family}.{recommended_size}"
+    #         else:
+    #             recommended_instance = "No larger size available"
+
+    #     return status, recommended_instance
+
+    # def print_table(data):
+    #     """
+    #     Prints the data in a formatted table.
+    #     """
+    #     headers = ["Serial No.", "Current EC2", "Current CPU (%)", "Status", "Recommended EC2"]
+    #     print(f"+{'-'*10}+{'-'*15}+{'-'*17}+{'-'*15}+{'-'*20}+")
+    #     print(f"| {headers[0]:<9} | {headers[1]:<14} | {headers[2]:<16} | {headers[3]:<14} | {headers[4]:<19} |")
+    #     print(f"+{'-'*10}+{'-'*15}+{'-'*17}+{'-'*15}+{'-'*20}+")
+    #     for i, row in enumerate(data, 1):
+    #         print(f"| {i:<9} | {row[0]:<14} | {row[1]:<16} | {row[2]:<14} | {row[3]:<19} |")
+    #     print(f"+{'-'*10}+{'-'*15}+{'-'*17}+{'-'*15}+{'-'*20}+")
+
+    # def main():
+    #     if len(sys.argv) != 3:
+    #         print("Usage: python script.py <current_instance_type> <cpu_utilization>")
+    #         sys.exit(1)
+
+    #     current_instance = sys.argv[1]
+    #     try:
+    #         cpu_utilization = float(sys.argv[2])
+    #     except ValueError:
+    #         print("CPU utilization must be a number.")
+    #         sys.exit(1)
+
+    #     status, recommended_instance = get_recommendation(current_instance, cpu_utilization)
+    #     data = [(current_instance, cpu_utilization, status, recommended_instance)]
+    #     print_table(data)
+
+    # if __name__ == "__main__":
+    #     main()
