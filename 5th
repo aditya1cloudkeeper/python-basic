@@ -1,0 +1,153 @@
+        # import os
+        # import hashlib
+        # import argparse
+        # import shutil
+
+        # def calculate_file_checksum(file_path, block_size=65536):
+        #     """
+        #     Calculate a SHA‑256 checksum for the file at 'file_path'.
+        
+        #     Reads the file in chunks (so large files are handled easily) and returns a 
+        #     hexadecimal string of the checksum.
+        #     """
+        #     sha256 = hashlib.sha256()
+        #     try:
+        #         with open(file_path, 'rb') as f:
+        #             while True:
+        #                 chunk = f.read(block_size)
+        #                 if not chunk:
+        #                     break
+        #                 sha256.update(chunk)
+        #         return sha256.hexdigest()
+        #     except Exception as error:
+        #         print(f"Error reading '{file_path}': {error}")
+        #         return None
+
+        # def scan_directory(directory):
+        #     """
+        #     Walk through 'directory' (including subdirectories) and build a dictionary
+        #     that maps each file's checksum to a list of file paths.
+        
+        #     This way, if two (or more) files have the same checksum, they are likely duplicates.
+        #     """
+        #     print("Scanning directory for files...")
+        #     checksum_dict = {}
+        #     for folder, _, files in os.walk(directory):
+        #         for name in files:
+        #             file_path = os.path.join(folder, name)
+        #             print(f"  Processing: {file_path}")
+        #             checksum = calculate_file_checksum(file_path)
+        #             if checksum:
+        #                 # If this checksum already exists, append the file path to the list.
+        #                 if checksum in checksum_dict:
+        #                     checksum_dict[checksum].append(file_path)
+        #                 else:
+        #                     checksum_dict[checksum] = [file_path]
+        #     return checksum_dict
+
+        # def display_duplicates(checksum_dict):
+        #     """
+        #     Look at the checksum dictionary and print groups of files that are duplicates.
+        #     Only groups with more than one file are considered duplicates.
+        #     Returns a new dictionary with just the duplicate groups.
+        #     """
+        #     duplicate_groups = {}
+        #     group_number = 1
+        #     for checksum, files in checksum_dict.items():
+        #         if len(files) > 1:
+        #             print(f"\nDuplicate Group {group_number}:")
+        #             print(f"Checksum: {checksum}")
+        #             for idx, file in enumerate(files):
+        #                 print(f"  [{idx}] {file}")
+        #             duplicate_groups[checksum] = files
+        #             group_number += 1
+
+        #     if not duplicate_groups:
+        #         print("\nNo duplicate files found!")
+        #     return duplicate_groups
+
+        # def delete_duplicate_files(duplicate_groups):
+        #     """
+        #     For each group of duplicates, keep the first file and delete the others.
+        #     """
+        #     print("\nDeleting duplicate files (keeping one copy per group)...")
+        #     for checksum, files in duplicate_groups.items():
+        #         # Skip the first file (we keep it) and delete the rest.
+        #         for file_path in files[1:]:
+        #             try:
+        #                 os.remove(file_path)
+        #                 print(f"Deleted: {file_path}")
+        #             except Exception as error:
+        #                 print(f"Error deleting '{file_path}': {error}")
+
+        # def move_duplicate_files(duplicate_groups, destination):
+        #     """
+        #     For each duplicate group, move all copies except the first one to the destination folder.
+        
+        #     If the destination folder does not exist, it will be created.
+        #     If a file with the same name already exists in the destination, a new name is created.
+        #     """
+        #     if not os.path.exists(destination):
+        #         os.makedirs(destination)
+        #         print(f"Created destination folder: {destination}")
+
+        #     print(f"\nMoving duplicate files to '{destination}' (keeping one copy per group)...")
+        #     for checksum, files in duplicate_groups.items():
+        #         for file_path in files[1:]:
+        #             try:
+        #                 base_name = os.path.basename(file_path)
+        #                 target_path = os.path.join(destination, base_name)
+        #                 # If the target file exists, append a counter.
+        #                 counter = 1
+        #                 while os.path.exists(target_path):
+        #                     name, ext = os.path.splitext(base_name)
+        #                     target_path = os.path.join(destination, f"{name}_{counter}{ext}")
+        #                     counter += 1
+        #                 shutil.move(file_path, target_path)
+        #                 print(f"Moved: {file_path} -> {target_path}")
+        #             except Exception as error:
+        #                 print(f"Error moving '{file_path}': {error}")
+
+        # def main():
+        #     # Set up command-line argument parsing.
+        #     parser = argparse.ArgumentParser(
+        #         description="Find duplicate files in a directory and optionally delete or move them."
+        #     )
+        #     parser.add_argument("directory", help="The directory to scan for duplicate files")
+        #     args = parser.parse_args()
+
+        #     if not os.path.isdir(args.directory):
+        #         print(f"Error: '{args.directory}' is not a valid directory.")
+        #         return
+
+        #     # Step 1: Scan the directory for files and compute checksums.
+        #     checksums = scan_directory(args.directory)
+
+        #     # Step 2: Display duplicate groups.
+        #     duplicates = display_duplicates(checksums)
+        #     if not duplicates:
+        #         return  # Nothing to do if no duplicates are found.
+
+        #     # Step 3: Ask the user what to do with duplicates.
+        #     print("\nWhat would you like to do with these duplicates?")
+        #     print("  [d] Delete duplicate files (keep one copy)")
+        #     print("  [m] Move duplicate files to a folder")
+        #     print("  [n] Do nothing and exit")
+        #     action = input("Enter your choice (d/m/n): ").strip().lower()
+
+        #     if action == 'd':
+        #         answer = input("Are you sure you want to delete duplicate files? (yes/no): ").strip().lower()
+        #         if answer == 'yes':
+        #             delete_duplicate_files(duplicates)
+        #             print("Deletion complete.")
+        #         else:
+        #             print("Deletion cancelled.")
+        #     elif action == 'm':
+        #         destination = input("Enter the destination folder to move duplicates into: ").strip()
+        #         move_duplicate_files(duplicates, destination)
+        #         print("Moving complete.")
+        #     else:
+        #         print("No changes made. Exiting.")
+
+        # if __name__ == "__main__":
+        #     main()
